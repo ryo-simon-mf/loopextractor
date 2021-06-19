@@ -21,6 +21,12 @@ import loopextractor
 loopextractor.run_algorithm("my_audio_file.mp3", n_templates=[30,25,10], output_savename="my_string")
 ```
 
+And you can run sample from CLI:
+
+```
+python trial_run.py --input_audio_file ./loopextractor/example_song.mp3 --output_audio_file here --n_template 30,25,5
+```
+
 ### Reference
 
 The script implements the algorithm described in a paper I published in 2018, [described here](http://jblsmith.github.io/projects/nonnegative-tensor-factorization/). When using this code for an academic paper/project, please cite this paper as a reference:
