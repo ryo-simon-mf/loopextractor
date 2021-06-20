@@ -20,7 +20,7 @@ try:
 except FileExistsError:
     ask1 = input("This folder(directory) already exists. Do you wanna overwrite?(yes/no)")
     if(ask1 == 'yes'):
-        print('fuck you stupid')
+        print('Over write' + args.output_audio_file)
         os.makedirs(tar_dir_name, exist_ok=True)
     elif(ask1 == 'no'):
         print('End this task.')
