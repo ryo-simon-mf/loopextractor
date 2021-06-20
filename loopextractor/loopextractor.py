@@ -16,7 +16,7 @@ import tensorly
 import tensorly.decomposition as tld
 from sklearn.decomposition import NMF
 
-def run_algorithm(audio_file, n_templates=[0,0,0], output_savename="extracted_loop"):
+def run_algorithm(audio_file, n_templates=[0,0,0], output_savename="extracted_loop", loopsNum=4):
     """Complete pipeline of algorithm.
 
     Parameters
@@ -47,7 +47,7 @@ def run_algorithm(audio_file, n_templates=[0,0,0], output_savename="extracted_lo
     # Load mono audio:
     signal_mono, fs = librosa.load(audio_file, sr=None, mono=True)
     # Use madmom to estimate the downbeat times:
-    downbeat_times = get_downbeats(signal_mono)
+    downbeat_times = get_downbeats(signal_mono, loopsNum)
     # Convert times to frames so we segment signal:
     downbeat_frames = librosa.time_to_samples(downbeat_times, sr=fs)
     # Create spectral cube out of signal:
@@ -67,7 +67,7 @@ def run_algorithm(audio_file, n_templates=[0,0,0], output_savename="extracted_lo
         # Write signal to disk:
         librosa.output.write_wav("{0}_{1}.wav".format(output_savename,ith_loop), ith_loop_signal, fs)
 
-def get_downbeats(signal):
+def get_downbeats(signal, loops_num):
     """Use madmom package to estimate downbeats for an audio signal.
 
     Parameters
@@ -97,7 +97,8 @@ def get_downbeats(signal):
     madmom.features.downbeats.DBNDownBeatTrackingProcessor
     """
     act = madmom.features.downbeats.RNNDownBeatProcessor()(signal)
-    proc = madmom.features.downbeats.DBNDownBeatTrackingProcessor(beats_per_bar=[3, 4], fps=100)
+    #proc = madmom.features.downbeats.DBNDownBeatTrackingProcessor(beats_per_bar=[3, 4], fps=100)
+    proc = madmom.features.downbeats.DBNDownBeatTrackingProcessor(beats_per_bar=[3, loops_num], fps=100)
     processor_output = proc(act)
     downbeat_times = processor_output[processor_output[:,1]==1,0]
     return downbeat_times

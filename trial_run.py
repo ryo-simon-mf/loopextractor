@@ -9,6 +9,7 @@ parser.add_argument('--n_sounds', type=int, default=30)
 parser.add_argument('--n_rhythms', type=int, default=25)
 parser.add_argument('--n_loops', type=int, default=10)
 parser.add_argument('--output_audio_file', type=str)
+parser.add_argument('--loops_num', type=int, default=4)
 args = parser.parse_args()
 
 n_template_list = [args.n_sounds, args.n_rhythms, args.n_loops]
@@ -16,6 +17,7 @@ n_template_list = [args.n_sounds, args.n_rhythms, args.n_loops]
 #print(args.input_audio_file)
 #print(args.output_audio_file)
 #print(n_template_list)
+#print(args.loops_num)
 
 
 # make output directory if it isn't exit
@@ -33,7 +35,7 @@ except FileExistsError:
 
 
 # run loopextracktor
-loopextractor.run_algorithm(args.input_audio_file, n_templates=n_template_list, output_savename= './' + args.output_audio_file + '/' + args.output_audio_file)
+loopextractor.run_algorithm(args.input_audio_file, n_templates=n_template_list, output_savename= './' + args.output_audio_file + '/' + args.output_audio_file, loopsNum=args.loops_num)
 
 
 print('Finished this task')
