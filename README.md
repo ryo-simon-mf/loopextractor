@@ -24,7 +24,7 @@ loopextractor.run_algorithm("my_audio_file.mp3", n_templates=[30,25,10], output_
 And you can run sample from CLI:
 
 ```
-python trial_run.py --input_audio_file ./loopextractor/example_song.mp3 --output_audio_file here --n_template 30,25,5
+python trial_run.py --input_audio_file ./loopextractor/example_song.mp3 --output_audio_file here --n_loops 5 --loops_num 16
 ```
 
 ### Reference
